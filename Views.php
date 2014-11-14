@@ -4,6 +4,7 @@ require_once('Views\header.php');
 require_once('Views\registration_forms.php');
 require_once('Views\post_page.php');
 class Views{
+
     static function header_form(){
         $header=header_form();
         return $header;
