@@ -1,0 +1,13 @@
+div.post span.title{
+    font-size: 25px;
+    color:dimgray;
+}
+div.post a{
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+div.post .post_text{
+    width:700px;
+    border:2px solid dimgray;
+    line-height: 25px;
+}

@@ -1,0 +1,8 @@
+.insert_form_item input,textarea{
+    margin-bottom: 30px;
+    width:70%;
+
+}
+.insert_form_item textarea{
+
+}
