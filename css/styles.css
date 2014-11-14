@@ -1,0 +1,50 @@
+body{
+    background-color: white;
+}
+#header{
+    width:100%;
+    border-bottom: solid 1px black;
+    position: relative;
+    top: 20px;
+    background-color: white;
+    height:30px;
+}
+#header .menu{
+    font-size: 30px;
+
+}
+
+#mainbody{
+    position: relative;
+    float:left;
+    width:70%;
+    top:100px;
+    margin-left: 80px;
+}
+
+#login_form form,a{
+    margin: 5px;
+}
+#login_form{
+    float: right;
+    position: relative;
+    top:80px;
+    border: solid 1px black;
+    border-radius: 2px;
+}
+
+.input{
+    margin-bottom: 20px;
+}
+.input input{
+    width:40%;
+}
+.input textarea{
+    width:60%;
+}
+#rightside{
+    float: right;
+}
+#footer{
+
+}
