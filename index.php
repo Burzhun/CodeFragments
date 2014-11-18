@@ -5,23 +5,27 @@
     require_once('classes\user.php');
     require_once('classes\router.php');
     require_once('classes\post.php');
+    session_start();
+
     $routing=Router::getUrlArray();
-    print_r($routing);
+
     $mainbody='';
     $urltype=Router::urltype($routing);
     if($urltype=='post'){
-        echo $routing[2];
-        $row=Post::getPostdata($routing[2]);
+        $row=Post::getPostdata($routing[1]);
         print_r($row);
         $mainbody=Views::Post_to_html($row['id'],$row['type'],$row['title'],$row['description'],$row['text'],'','');
     }
-    $logging_in_mistake='';
-    $header=Views::header_form();
-    session_start();
+    $error_message='';
+
     if(isset($_POST['login'])&&isset($_POST['password'])){
-        if(User::user_exists($_POST['login'],$_POST['password'])){
-            $logging_in_mistake="Wrong e-mail or password";
+        $id=User::checkuser($_POST['login'],$_POST['password']);
+        if($id){
+            $_SESSION=$id;
+        }
+        else{
+            $error_message="Wrong e-mail or password";
         }
     }
-    $html=createpage([],['css/styles.css','css/post.css'],'MainPage',$header,$mainbody,'','');
+    $html=createpage([],['css/styles.css','css/post.css'],'MainPage',$mainbody,'','','','');
     echo $html;

@@ -1,6 +1,7 @@
 <?php
 function Post_page($id,$type,$title,$description,$text,$image,$url)
 {
+    $html='';
     switch($type) {
         case 'text':
             $html = "<div class='post_page'>

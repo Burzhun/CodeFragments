@@ -14,14 +14,14 @@ class Views{
         $header=insert_form();
         return $header;
     }
-    static  function log_in(){
-        return registration_forms::$log_in;
+    static  function log_in($error){
+        return log_in($error);
     }
     static function log_out(){
-        return registration_forms::$log_out;
+        return log_out();
     }
     static function registration_form(){
-        return registration_forms::$registration_form;
+        return registration_form();
     }
     static function Post_page($id,$type,$title,$description,$text,$image,$url){
         return Post_page($id,$type,$title,$description,$text,$image,$url);

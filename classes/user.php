@@ -25,42 +25,51 @@ class User
             return null;
         }
     }
-     static function user_exists($email)
-     {
-         $db=MyDatabase::getInstance();
-         $email=$db->real_escape_string($email);
-         $query="select count(*) from user where email='{$email}'";
-         $result=$db->query($query);
-         $count=0;
-         $db->close();
-         if($result){
-            while($row=$result->fetch_assoc()) {
-                $count = $row['count(*)'];
+
+    static function checkuser($email,$password){
+        $db=MyDatabase::getInstance();
+        $email=$db->real_escape_string($email);
+        $query="select hash,password,id from user where email='{$email}'";
+        $result=MyDatabase::ReadQuery($query);
+        if($result->num_rows==1){
+            $password=$db->real_escape_string($password);
+            $row=$result->fetch_assoc();
+            $hash=$row['hash'];
+            $password=sha1($hash.$password);
+            if($password==$row['password']){
+                return $row['id'];
             }
-         }
-         if($count>0)
-         {
-             return true;
-         }
-         else return false;
-     }
+        }
+        return false;
+    }
+
+    static function user_exists($email){
+        $db=MyDatabase::getInstance();
+        $email=$db->real_escape_string($email);
+        $query="select id from user where email='{$email}'";
+        $result=MyDatabase::ReadQuery($query);
+        if($result->num_rows==0){
+            return false;
+        }
+        return true;
+    }
+
     static function createHash()
     {
         $hash=md5(mcrypt_create_iv(10,MCRYPT_DEV_RANDOM));
         return $hash;
     }
-    static function AddUser($email,$name,$nickname,$password){
+    static function AddUser($email,$login,$name,$password){
         $db=MyDatabase::getInstance();
         $email=$db->real_escape_string($email);
         $name=$db->real_escape_string($name);
-        $nickname=$db->real_escape_string($nickname);
+        $login=$db->real_escape_string($login);
         $password=$db->real_escape_string($password);
         $hash=self::createHash();
         $password=sha1($hash.$password);
         $date=date('Y-m-d H:i:s');
-        $query="insert into user(email,nickname,password,name,date,type,hash)
-            values('{$email}','{$nickname}','{$password}','{$name}','{$date}','user','{$hash}')";
-        echo $query;
+        $query="insert into user(email,login,password,name,date,type,hash)
+            values('{$email}','{$login}','{$password}','{$name}','{$date}','user','{$hash}')";
         $db->query($query);
     }
 }

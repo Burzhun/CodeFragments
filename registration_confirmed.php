@@ -14,10 +14,10 @@ if(isset($_SESSION['registration_confirmed'])&&$_SESSION['registration_confirmed
         </div>
     ";
     $_SESSION['registration_confirmed']=0;
-    $html=createpage([],['css/styles.css'],'Add article',$header,$form,'','');
+    $header=Views::header_form();
+    $html=createpage([],['css/styles.css'],'Add article',$header,$form,'','','');
     echo $html;
 }
 else{
-   // header('Location:index.php');
-    print_r($_SESSION);
+    header('Location:index.php');
 }

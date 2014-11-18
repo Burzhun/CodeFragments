@@ -24,13 +24,13 @@ class Router{
 
     static function urltype($routing){
         $type='';
-        if(count($routing)==3&&$routing[1]=='post'&&preg_match("/[0-9a-zA-Z.,!@%:;?]+/",$routing[2])){
+        if(count($routing)==2&&$routing[0]=='post'&&preg_match("/[0-9a-zA-Z.,!@%:;?]+/",$routing[1])){
             $type="post";
         }
-        if(count($routing)==1&&$routing[0]==''){
+        if(count($routing)==0){
             $type="index";
         }
-        if(count($routing)==2&&$routing[1]=='new'){
+        if(count($routing)==1&&$routing[0]=='new'){
             $type="new";
         }
 
