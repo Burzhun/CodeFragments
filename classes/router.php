@@ -6,11 +6,12 @@ class Router{
 
         for($i= 0;$i < sizeof($scriptName);$i++)
         {
-            if ($requestURI[$i]== $scriptName[$i])
+            if ($requestURI[$i]== $scriptName[$i]||$requestURI[$i] == "mysite")
             {
                 unset($requestURI[$i]);
             }
         }
+
         $array = array_values($requestURI);
         return $array;
     }
@@ -22,15 +23,16 @@ class Router{
         return $path;
     }
 
-    static function urltype($routing){
-        $type='';
+    static function urltype($routing=null){
+        if($routing==null){$routing=self::getUrlArray();}
+        $type='34 ';
         if(count($routing)==2&&$routing[0]=='post'&&preg_match("/[0-9a-zA-Z.,!@%:;?]+/",$routing[1])){
             $type="post";
         }
-        if(count($routing)==0){
+        if(count($routing)<2){
             $type="index";
         }
-        if(count($routing)==1&&$routing[0]=='new'){
+        if(count($routing)==2&&$routing[0]=='new'){
             $type="new";
         }
 

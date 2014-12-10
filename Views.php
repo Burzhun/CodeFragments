@@ -23,11 +23,8 @@ class Views{
     static function registration_form(){
         return registration_form();
     }
-    static function Post_page($id,$type,$title,$description,$text,$image,$url){
-        return Post_page($id,$type,$title,$description,$text,$image,$url);
-    }
 
-    static function Post_to_html($id,$type,$title,$description,$text,$image,$url){
-        return Post_to_html($id,$type,$title,$description,$text,$image,$url);
+    static function Post($post,$separately,$user_id){
+        return post_html($post,$separately,$user_id);
     }
 }

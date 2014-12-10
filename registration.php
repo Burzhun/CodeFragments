@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once ('template.php');
-
 require_once('classes\user.php');
 
 $message="";
@@ -20,7 +19,7 @@ if(isset($_POST['email'])&&(isset($_POST['login']))&&isset($_POST['name'])&&isse
 }
 $header=Views::header_form();
 $form=$message.Views::registration_form();
-
-
-$html=createpage([],['css/styles.css'],'Add article',$header,$form,'','');
+$page=new Page();
+$page->add_css(['css/post.css'])->add_javascript([])->set_title('Main Page')->mainbody($form);
+$html=$page->CreatePage();
 echo $html;

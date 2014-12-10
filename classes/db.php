@@ -9,7 +9,6 @@ class MyDatabase
 	}
 	 static function UpdateQuery($query){
          $db=self::getInstance();
-         $query=$db->real_escape_string($query);
          $db->query($query);
      }
 

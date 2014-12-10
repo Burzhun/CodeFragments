@@ -12,5 +12,5 @@ if(isset($_POST['Title'])&&isset($_POST['Description'])&&isset($_POST['Text'])&&
     $image='';
     $url='';
     Post::AddPost($title,$description,$type,$text,$image,$url,$tags);
-
 }
+header('Location:index.php');

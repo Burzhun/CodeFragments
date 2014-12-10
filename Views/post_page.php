@@ -1,44 +1,58 @@
 <?php
-function Post_page($id,$type,$title,$description,$text,$image,$url)
+function post_html($post,$separately,$user_id)
 {
-    $html='';
-    switch($type) {
-        case 'text':
-            $html = "<div class='post_page'>
-                     <span>{$title}</span><br>
-                    <div class='description'>{$description}</div><br>
-                    <div class='post_text'>{$text}</div>
-                 </div>";
-            break;
-        case 'image':
-            $html="<div class='post_page'>
-                    <span>{$title}</span><br>
-                    <div class='description'>{$description}</div><br>
-                    <img src='{images/$image}'>
-                </div>";
-            break;
+    $html="<div id='posts'>";
+    $div_rating="";
+    if($user_id!=''){
+        $user_rating=Post::user_rating($user_id,$post->id);
+        //$user_rating=0;
+        $div_rating="<div_ratings>";
+        switch($user_rating) {
+            case 0:
+                $div_rating.="<span>0</span>";
+                break;
+            case 1:
+                $div_rating.="<span>1</span>";
+                break;
+        }
+        $div_rating.="</div>";
     }
-    return $html;
-}
 
-function Post_to_html($id,$type,$title,$description,$text,$image,$url){
-    $path=Router::pathtofolder();
-    switch($type) {
-        case 'text':
-            $html = "<div class='post'>
-                    <a href='{$path}post/{$title}'> <span class='title'>{$title}</span><br></a>
-                    <div class='description'>{$description}</div><br>
-                    <div class='post_text'>{$text}</div>
-                 </div>";
-            break;
-        case 'image':
-            $html="<div class='post'>
-                    <span>{$title}</span><br>
-                    <div class='description'>{$description}</div><br>
-                    <img src='{images/$image}'>
-                </div>";
-            break;
+    if($separately){
+        switch($post->type)
+        {
+            case 'text':
+                $html.= "<div class='post_page'>
+                 <span>{$post->title}</span><br>
+                <div class='description'>{$post->description}</div><br>
+                <div class='post_text'>{$post->text}</div>";
+                break;
+            case 'image':
+                $html.="<div class='post_page'>
+                <span>{$post->title}</span><br>
+                <div class='description'>{$post->description}</div><br>
+                <img src='{images/$post->image}'>";
+                break;
+        }
     }
-    return $html;
+    else{
+        $path=Router::pathtofolder();
+        switch($post->type) {
+            case 'text':
+                $html.= "<div class='post'>
+                    <a href='{$path}post/{$post->title}'> <span class='title'>{$post->title}</span><br></a>
+                    <div class='description'>{$post->description}</div><br>
+                    <div class='post_text'>{$post->text}</div>";
+                break;
+            case 'image':
+                $html.="<div class='post'>
+                    <a href='{$path}post/{$post->title}'> <span class='title'>{$post->title}</span><br></a>
+                    <div class='description'>{$post->description}</div><br>
+                    <a href='{$path}post/{$post->title}'><img src='{images/$post->image}'></a>";
+                break;
+        }
+    }
+    $html.=$div_rating."</div>";
 
+    return $html;
 }

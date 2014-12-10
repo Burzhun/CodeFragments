@@ -5,27 +5,34 @@
     require_once('classes\user.php');
     require_once('classes\router.php');
     require_once('classes\post.php');
+    require_once('Controllers\post_controller.php');
+    require_once('Views/post_page.php');
+    require_once('classes/comment.php');
     session_start();
-
-    $routing=Router::getUrlArray();
-
-    $mainbody='';
-    $urltype=Router::urltype($routing);
-    if($urltype=='post'){
-        $row=Post::getPostdata($routing[1]);
-        print_r($row);
-        $mainbody=Views::Post_to_html($row['id'],$row['type'],$row['title'],$row['description'],$row['text'],'','');
-    }
+    $routing=Router::urltype();
+    $_SESSION['previous_page']=$_SERVER['REQUEST_URI'];
     $error_message='';
+    $user_id='';
+    $comment=new Comment(1);
+    print_r($comment);
 
-    if(isset($_POST['login'])&&isset($_POST['password'])){
-        $id=User::checkuser($_POST['login'],$_POST['password']);
-        if($id){
-            $_SESSION=$id;
+    if(isset($_SESSION['user_id'])){
+        $user_id=$_SESSION['user_id'];
+    }
+    if(isset($_POST['email'])&&isset($_POST['password'])&&(!isset($_SESSION['user_id'])||$_SESSION['user_id']=='')){
+        $id=User::checkuser($_POST['email'],$_POST['password']);
+        print_r($id);
+        if(User::checkuser($_POST['email'],$_POST['password'])){
+            $_SESSION['user_id']=$id;
+            header('Location:'.$_SERVER['REQUEST_URI']);
         }
         else{
             $error_message="Wrong e-mail or password";
         }
     }
-    $html=createpage([],['css/styles.css','css/post.css'],'MainPage',$mainbody,'','','','');
+    $page=new Page();
+
+    $page->add_css(['css/post.css'])->add_javascript([])->set_title('Main Page')->mainbody(Page_content($routing,$user_id));
+    $html=$page->CreatePage();
+    echo $error_message;
     echo $html;

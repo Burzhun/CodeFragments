@@ -15,7 +15,8 @@ if(isset($_SESSION['registration_confirmed'])&&$_SESSION['registration_confirmed
     ";
     $_SESSION['registration_confirmed']=0;
     $header=Views::header_form();
-    $html=createpage([],['css/styles.css'],'Add article',$header,$form,'','','');
+    $page->add_css(['css/post.css'])->add_javascript([])->set_title('Main Page')->mainbody($form);
+    $html=$page->CreatePage();
     echo $html;
 }
 else{

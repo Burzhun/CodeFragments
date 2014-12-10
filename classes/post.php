@@ -8,16 +8,44 @@ class Post{
     public $text;
     public $image;
     public $url;
+
     function Post($id){
-        $array=self::GetPostById($id)->fetch_assoc();
-        $this->id=$id;
-        $this->image=$array['image'];
-        $this->text=$array['text'];
-        $this->type=$array['type'];
-        $this->url=$array['url'];
-        $this->description=$array['description'];
+        if(!isset($id['id']))
+        {
+            $array=self::GetPostById($id)->fetch_assoc();
+            $this->id=$id;
+            $this->image=$array['image'];
+            $this->text=$array['text'];
+            $this->type=$array['type'];
+            $this->url=$array['url'];
+            $this->title=$array['title'];
+            $this->description=$array['description'];
+        }
+        else{
+            $this->id=$id['id'];
+            $this->title=$id['title'];
+            $this->image=$id['image'];
+            $this->text=$id['text'];
+            $this->type=$id['type'];
+            $this->url=$id['url'];
+            $this->description=$id['description'];
+        }
+
     }
 
+
+
+    static  function user_rating($user_id,$post_id){
+        $query="select values1 from user_ratings where user_id={$user_id} and post_id={$post_id}";
+        $res=MyDatabase::ReadQuery($query);
+        if($res->num_rows==0){
+            return 0;
+        }
+        else{
+            $row=$res->fetch_assoc();
+            return $row['values1'];
+        }
+    }
     static function GetPostById($id){
         $db=MyDatabase::getInstance();
         $id=$db->real_escape_string($id);
@@ -36,7 +64,7 @@ class Post{
               ('{$title}','{$type}','{$description}','{$text}','{$image}','{$date}','{$url}','{$tags}')");
     }
 
-    static function getPostdata($title){
+    static function get_Post_by_title($title){
         $db=MyDatabase::getInstance();
         $title=$db->real_escape_string($title);
         $result=MyDatabase::ReadQuery("select * from post where title='{$title}'");
