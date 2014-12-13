@@ -1,0 +1,13 @@
+
+#comments{
+    margin-top: 20px;
+}
+div.root_comment{
+}
+
+div.comment{
+    margin-left: 20px;
+}
+div.comment_text{
+    margin-bottom: 8px;
+}

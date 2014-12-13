@@ -12,6 +12,7 @@ class Page{
         $this->javascript="<script src='{$path}js/jquery-2.0.3.min.js'></script>";
         $this->javascript.="<script src='{$path}js/main.js'></script>";
         $this->css="<link rel='stylesheet' type='text/css' href='{$path}css/styles.css'/>";
+        $this->css.="<link rel='stylesheet' type='text/css' href='{$path}css/comments.css'/>";
         $this->header=Views::header_form();
         $this->rightside="";
         $this->mainbody="";

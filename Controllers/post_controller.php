@@ -1,5 +1,5 @@
 <?php
-function Page_content($routing,$user_id=''){
+function Page_content3($routing,$user_id=''){
     $url_type=Router::getUrlArray($routing);
     $content='';
     $user=new User($user_id);

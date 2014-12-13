@@ -5,7 +5,7 @@
     require_once('classes\user.php');
     require_once('classes\router.php');
     require_once('classes\post.php');
-    require_once('Controllers\post_controller.php');
+    require_once('Controllers\Page_controller.php');
     require_once('Views/post_page.php');
     require_once('classes/comment.php');
     session_start();
@@ -13,8 +13,7 @@
     $_SESSION['previous_page']=$_SERVER['REQUEST_URI'];
     $error_message='';
     $user_id='';
-    $comment=new Comment(1);
-    print_r($comment);
+    print_r(Router::getUrlArray());
 
     if(isset($_SESSION['user_id'])){
         $user_id=$_SESSION['user_id'];

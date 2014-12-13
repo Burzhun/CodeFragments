@@ -26,5 +26,23 @@ class Comment
         }
         $this->children_comments=$array;
     }
-    
+
+    static function add_comment($text,$image,$user_id,$post_id,$parent_comment_id)
+    {
+
+        $query="insert into comments(text,post_id,user_id,image,parent_comment_id) values('{$text}',{$post_id},{$user_id},'{$image}',{$parent_comment_id})";
+        MyDatabase::UpdateQuery($query);
+    }
+    static function comments_array($post_id){
+        $query="select id from comments where post_id='{$post_id}' and parent_comment_id=0";
+        $result=MyDatabase::ReadQuery($query);
+        $comments_array=array();
+        if($result) {
+            while ($row = $result->fetch_assoc()) {
+                $comment = new Comment($row['id']);
+                $comments_array[] = $comment;
+            }
+        }
+        return $comments_array;
+    }
 }
